@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const productRoutes = require("./api/routes/product");
 
 const logger = require("morgan");
 
@@ -8,6 +9,10 @@ require("dotenv").config();
 
 //logger middleware - dev dependency
 app.use(logger("dev"));
+
+//products route
+app.use("/products", productRoutes);
+
 //main route
 app.get("/", (req, res, next) => {
   res.status("200").json({

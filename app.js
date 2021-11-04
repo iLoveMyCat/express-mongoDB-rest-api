@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 
+//assgin .env file to proccess.env
+require("dotenv").config();
+
 //main route
 app.get("/", (req, res, next) => {
   res.status("200").json({

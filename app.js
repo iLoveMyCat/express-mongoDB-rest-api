@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const productRoutes = require("./api/routes/product");
+const userRoutes = require("./api/routes/user");
 
 const logger = require("morgan");
 
@@ -12,6 +13,7 @@ app.use(logger("dev"));
 
 //products route
 app.use("/products", productRoutes);
+app.use("/users", userRoutes);
 
 //main route
 app.get("/", (req, res, next) => {

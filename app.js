@@ -4,6 +4,7 @@ const productRoutes = require("./api/routes/product");
 const userRoutes = require("./api/routes/user");
 const mongoose = require("mongoose");
 const logger = require("morgan");
+
 //assgin .env file to proccess.env
 require("dotenv").config();
 

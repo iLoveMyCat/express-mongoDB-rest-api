@@ -3,7 +3,6 @@ const app = express();
 const productRoutes = require("./api/routes/product");
 const userRoutes = require("./api/routes/user");
 const mongoose = require("mongoose");
-process.env.MONGO_DB_CONNECTION_STRING;
 const logger = require("morgan");
 //assgin .env file to proccess.env
 require("dotenv").config();
@@ -13,6 +12,9 @@ mongoose.connect(process.env.MONGO_URI).catch((err) => console.log(err));
 
 //logger middleware - dev dependency
 app.use(logger("dev"));
+
+//body parser
+app.use(express.json());
 
 //products route
 app.use("/products", productRoutes);

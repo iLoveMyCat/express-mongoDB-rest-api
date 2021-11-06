@@ -15,7 +15,7 @@ exports.createProduct = (req, res, next) => {
         description: product.description,
         Request: {
           type: "GET",
-          URL: `http://localhost:3000/products/${product._id}`,
+          URL: `http://${process.env.HOST}:${process.env.PORT}/products/${product._id}`,
         },
       };
 
@@ -43,7 +43,7 @@ exports.getAllProducts = (req, res, next) => {
             imageURL: product.imageURL,
             Request: {
               type: "GET",
-              URL: `http://localhost:3000/products/${product._id}`,
+              URL: `http://${process.env.HOST}:${process.env.PORT}/products/${product._id}`,
             },
           };
         }),

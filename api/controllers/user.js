@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const jsonwebtoken = required("jsonwebtoken");
 
 exports.signup = (req, res, next) => {
   User.find({ email: req.body.email }).then((users) => {
@@ -42,7 +43,44 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-  res.status(200).json({ message: "token :o" });
+  User.find({ email: req.body.email }).then((user) => {
+    if (user.length === 0) {
+      return res.status(401).json({
+        message: "Authorization failed!",
+      });
+    } else {
+      bcrypt.genSalt(13, (err, salt) => {
+        if (err) {
+          return res.status(500).json({ error: err });
+        }
+        bcrypt.hash(req.body.password, salt, function (err, hashedPassword) {
+          if (err) {
+            return res.status(500).json({ error: err });
+          }
+          if (bcrypt.compare(req.body.password, hashedPassword)) {
+            const token = jsonwebtoken.sign(
+              { id: user._id, email: user.email },
+              process.env.JWT_SECRET
+            );
+            const response = {
+              _id: user.id,
+              name: user.email,
+              token: token,
+              Request: {
+                type: "GET",
+                URL: `http://${process.env.HOST}:${process.env.PORT}/users/${user._id}`,
+              },
+            };
+            return res.status(200).json(response);
+          } else {
+            return res.status(401).json({
+              message: "Authorization failed!",
+            });
+          }
+        });
+      });
+    }
+  });
 };
 
 exports.getAllUsers = (req, res, next) => {

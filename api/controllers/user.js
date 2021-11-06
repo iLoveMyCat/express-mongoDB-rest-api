@@ -1,6 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
-const jsonwebtoken = required("jsonwebtoken");
+const jsonwebtoken = require("jsonwebtoken");
 
 exports.signup = (req, res, next) => {
   User.find({ email: req.body.email }).then((users) => {
